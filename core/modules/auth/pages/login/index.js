@@ -33,7 +33,6 @@ const Home = (props) => {
 
             if (!result.error) {
                 resetForm();
-                console.log('logged in', result);
             } else {
                 console.log(result.error);
             }

@@ -20,8 +20,6 @@ export default NextAuth({
                     email: credentials.email,
                 });
 
-                console.log('usersCollection', usersCollection);
-
                 if (!usersCollection) {
                     throw new Error('No user found!');
                 }
@@ -34,8 +32,6 @@ export default NextAuth({
                 if (!isValid) {
                     throw new Error('Could not log you in!');
                 }
-
-                console.log('isValid', isValid);
 
                 return {
                     email: usersCollection.email,
