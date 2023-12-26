@@ -6,6 +6,7 @@ const GetActivity = async (req, res) => {
         await MongoDBConnection();
         const activities = await Activity.create({
             name: req.body.name,
+            location: req.body.location,
         });
         return res.status(200).send(activities);
     } catch (error) {

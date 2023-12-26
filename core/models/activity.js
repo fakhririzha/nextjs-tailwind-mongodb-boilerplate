@@ -6,10 +6,9 @@ const activitySchema = new mongoose.Schema(
             type: String,
             required: [true, 'Name is required'],
         },
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: [true, 'User is required'],
+        location: {
+            type: String,
+            required: [true, 'Location is required'],
         },
         createdAt: {
             type: Date,

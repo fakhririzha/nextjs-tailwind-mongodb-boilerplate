@@ -1,11 +1,16 @@
 import Layout from '@layout';
 import Components from '@modules/home/pages/components';
 
+import { handleCreateActivity } from '@modules/home/services';
+
 import { getSession } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
+
+import { useFormik } from 'formik';
+import { object, string } from 'yup';
 
 const Home = (props) => {
     const pageConfig = {
@@ -15,6 +20,27 @@ const Home = (props) => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            location: '',
+        },
+        validationSchema: object().shape({
+            name: string().required('Name is required'),
+            location: string().required('Location is required'),
+        }),
+        onSubmit: async (values, { resetForm }) => {
+            try {
+                await handleCreateActivity(values);
+                console.log('Berhasil membuat aktivitas baru!');
+                resetForm();
+            } catch (error) {
+                console.log(error);
+                console.log('Gagal membuat aktivitas baru');
+            }
+        },
+    });
 
     useEffect(() => {
         getSession().then((session) => {
@@ -36,7 +62,7 @@ const Home = (props) => {
 
     return (
         <Layout pageConfig={pageConfig}>
-            <Components {...props} />
+            <Components formik={formik} {...props} />
         </Layout>
     );
 };
