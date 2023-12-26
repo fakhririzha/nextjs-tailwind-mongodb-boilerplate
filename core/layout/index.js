@@ -3,8 +3,7 @@ import Head from 'next/head';
 
 import cx from 'classnames';
 
-import Header from '@layout/header';
-
+const Header = dynamic(() => import('@layout/header', { ssr: false }));
 const Footer = dynamic(() => import('@layout/footer', { ssr: true }));
 
 const Layout = (props) => {
