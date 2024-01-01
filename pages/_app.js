@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ['latin'] });
 
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 import '@styles/globals.css';
 import { SessionProvider, useSession } from 'next-auth/react';
@@ -46,7 +46,7 @@ const App = (props) => {
                 <AuthWrapper>
                     <Component
                         {...pageProps}
-                        className={cx(
+                        className={clsx(
                             inter.className,
                             'light',
                             'text-foreground',
@@ -65,7 +65,7 @@ const App = (props) => {
                 <>
                     <Component
                         {...pageProps}
-                        className={cx(
+                        className={clsx(
                             inter.className,
                             'light',
                             'text-foreground',

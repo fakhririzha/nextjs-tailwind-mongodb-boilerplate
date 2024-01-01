@@ -7,7 +7,7 @@ import { Label } from '@shadcn/components/ui/label';
 import EyeIcon from '@heroicons/react/24/solid/EyeIcon';
 import EyeSlashIcon from '@heroicons/react/24/solid/EyeSlashIcon';
 
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 const LoginComponents = (props) => {
     const { register, handleSubmit, errors, submitHandler } = props;
@@ -19,7 +19,7 @@ const LoginComponents = (props) => {
 
     return (
         <div
-            className={cx(
+            className={clsx(
                 'signup-form',
                 'mx-auto',
                 'desktop:max-w-[1280px]',
@@ -31,7 +31,7 @@ const LoginComponents = (props) => {
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.email &&
                                 errors.email.message &&
@@ -47,7 +47,7 @@ const LoginComponents = (props) => {
                     />
                     {errors && errors.email && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.email.message && 'text-red-500'
                             )}
                         >
@@ -57,7 +57,7 @@ const LoginComponents = (props) => {
                 </div>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.password &&
                                 errors.password.message &&
@@ -68,7 +68,7 @@ const LoginComponents = (props) => {
                         Password
                     </Label>
                     <div
-                        className={cx(
+                        className={clsx(
                             'flex',
                             'w-full',
                             'items-center',
@@ -76,7 +76,7 @@ const LoginComponents = (props) => {
                         )}
                     >
                         <Input
-                            className={cx('w-full')}
+                            className={clsx('w-full')}
                             placeholder="Enter your password"
                             type={isPasswordVisible ? 'text' : 'password'}
                             {...register('password')}
@@ -88,15 +88,15 @@ const LoginComponents = (props) => {
                             }
                         >
                             {isPasswordVisible ? (
-                                <EyeSlashIcon className={cx('w-4', 'h-4')} />
+                                <EyeSlashIcon className={clsx('w-4', 'h-4')} />
                             ) : (
-                                <EyeIcon className={cx('w-4', 'h-4')} />
+                                <EyeIcon className={clsx('w-4', 'h-4')} />
                             )}
                         </Button>
                     </div>
                     {errors && errors.password && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.password.message && 'text-red-500'
                             )}
                         >
@@ -105,7 +105,7 @@ const LoginComponents = (props) => {
                     )}
                 </div>
                 <Button
-                    className={cx('block', 'grid-cols-1', 'mt-4')}
+                    className={clsx('block', 'grid-cols-1', 'mt-4')}
                     type="submit"
                 >
                     Submit

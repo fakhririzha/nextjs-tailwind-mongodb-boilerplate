@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 import { Button } from '@shadcn/components/ui/button';
 import { Input } from '@shadcn/components/ui/input';
@@ -9,7 +9,7 @@ const HomeComponents = (props) => {
 
     return (
         <div
-            className={cx(
+            className={clsx(
                 'grid',
                 'grid-cols-1',
                 'desktop:max-w-screen-desktop',
@@ -21,7 +21,7 @@ const HomeComponents = (props) => {
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.name &&
                                 errors.name.message &&
@@ -37,7 +37,7 @@ const HomeComponents = (props) => {
                     />
                     {errors && errors.name && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.name.message && 'text-red-500'
                             )}
                         >
@@ -47,7 +47,7 @@ const HomeComponents = (props) => {
                 </div>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.location &&
                                 errors.location.message &&
@@ -63,7 +63,7 @@ const HomeComponents = (props) => {
                     />
                     {errors && errors.location && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.location.message && 'text-red-500'
                             )}
                         >
@@ -72,7 +72,7 @@ const HomeComponents = (props) => {
                     )}
                 </div>
                 <Button
-                    className={cx('block', 'grid-cols-1', 'mt-4')}
+                    className={clsx('block', 'grid-cols-1', 'mt-4')}
                     type="submit"
                 >
                     Submit

@@ -1,11 +1,11 @@
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 const HomeComponents = (props) => {
     const { activityData } = props;
 
     return (
         <div
-            className={cx(
+            className={clsx(
                 'grid',
                 'grid-cols-1',
                 'desktop:max-w-screen-desktop',
@@ -14,13 +14,13 @@ const HomeComponents = (props) => {
             )}
         >
             <h1>Tabel Activity Tracker</h1>
-            <table className={cx('mt-4', 'border-2', 'border-slate-700')}>
-                <thead className={cx('bg-slate-400')}>
+            <table className={clsx('mt-4', 'border-2', 'border-slate-700')}>
+                <thead className={clsx('bg-slate-400')}>
                     <tr>
-                        <th className={cx('text-left', 'p-4')}>No.</th>
-                        <th className={cx('text-left', 'p-4')}>Nama</th>
-                        <th className={cx('text-left', 'p-4')}>Lokasi</th>
-                        <th className={cx('text-left', 'p-4')}>Tanggal</th>
+                        <th className={clsx('text-left', 'p-4')}>No.</th>
+                        <th className={clsx('text-left', 'p-4')}>Nama</th>
+                        <th className={clsx('text-left', 'p-4')}>Lokasi</th>
+                        <th className={clsx('text-left', 'p-4')}>Tanggal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,17 +30,17 @@ const HomeComponents = (props) => {
                             return (
                                 <tr
                                     key={index}
-                                    className={cx(
+                                    className={clsx(
                                         'odd:bg-white',
                                         'even:bg-slate-200'
                                     )}
                                 >
-                                    <td className={cx('p-4')}>{index + 1}</td>
-                                    <td className={cx('p-4')}>{item.name}</td>
-                                    <td className={cx('p-4')}>
+                                    <td className={clsx('p-4')}>{index + 1}</td>
+                                    <td className={clsx('p-4')}>{item.name}</td>
+                                    <td className={clsx('p-4')}>
                                         {item.location}
                                     </td>
-                                    <td className={cx('p-4')}>
+                                    <td className={clsx('p-4')}>
                                         {item.createdAt}
                                     </td>
                                 </tr>

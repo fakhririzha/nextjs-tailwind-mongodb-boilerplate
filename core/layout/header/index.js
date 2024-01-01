@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 import { signOut, useSession } from 'next-auth/react';
 
@@ -8,20 +8,20 @@ const Header = () => {
     const { data: session, status } = useSession();
 
     return (
-        <header className={cx('bg-green-700', 'sticky', 'z-40', 'top-0')}>
+        <header className={clsx('bg-green-700', 'sticky', 'z-40', 'top-0')}>
             <nav
-                className={cx(
+                className={clsx(
                     'desktop:max-w-screen-desktop',
                     'py-4',
                     'px-10',
                     'mx-auto'
                 )}
             >
-                <ul className={cx('flex', 'flex-row', 'justify-between')}>
-                    <li className={cx('flex', 'flex-row')}>
+                <ul className={clsx('flex', 'flex-row', 'justify-between')}>
+                    <li className={clsx('flex', 'flex-row')}>
                         <Link
                             href="/"
-                            className={cx(
+                            className={clsx(
                                 'px-4',
                                 'py-2',
                                 'text-base',
@@ -35,9 +35,9 @@ const Header = () => {
                     </li>
                     {status === 'authenticated' && session ? (
                         <>
-                            <li className={cx('flex', 'flex-row')}>
+                            <li className={clsx('flex', 'flex-row')}>
                                 <h1
-                                    className={cx(
+                                    className={clsx(
                                         'px-4',
                                         'py-2',
                                         'text-base',
@@ -48,7 +48,7 @@ const Header = () => {
                                 </h1>
                                 <button
                                     onClick={() => signOut()}
-                                    className={cx(
+                                    className={clsx(
                                         'px-4',
                                         'py-2',
                                         'text-base',
@@ -70,10 +70,10 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            <li className={cx('flex', 'flex-row')}>
+                            <li className={clsx('flex', 'flex-row')}>
                                 <Link
                                     href="/auth/login"
-                                    className={cx(
+                                    className={clsx(
                                         'px-4',
                                         'py-2',
                                         'text-base',
@@ -92,7 +92,7 @@ const Header = () => {
                                 </Link>
                                 <Link
                                     href="/auth/signup"
-                                    className={cx(
+                                    className={clsx(
                                         'px-4',
                                         'py-2',
                                         'text-base',

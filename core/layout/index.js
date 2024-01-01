@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 const Header = dynamic(() => import('@layout/header', { ssr: false }));
 const Footer = dynamic(() => import('@layout/footer', { ssr: true }));
@@ -22,7 +22,7 @@ const Layout = (props) => {
                 <title>{pageConfig.title}</title>
             </Head>
             {includeHeader ? <Header /> : null}
-            <main className={cx('desktop:min-h-[100vh]')}>{children}</main>
+            <main className={clsx('desktop:min-h-[100vh]')}>{children}</main>
             {includeFooter ? <Footer /> : null}
         </>
     );

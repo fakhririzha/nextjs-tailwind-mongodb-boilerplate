@@ -7,7 +7,7 @@ import { Label } from '@shadcn/components/ui/label';
 import EyeIcon from '@heroicons/react/24/solid/EyeIcon';
 import EyeSlashIcon from '@heroicons/react/24/solid/EyeSlashIcon';
 
-import cx from 'classnames';
+import { clsx } from 'clsx/lite';
 
 const SignUpComponents = (props) => {
     const { register, handleSubmit, errors, submitHandler } = props;
@@ -19,19 +19,19 @@ const SignUpComponents = (props) => {
 
     return (
         <div
-            className={cx(
+            className={clsx(
                 'signup-form',
                 'mx-auto',
                 'desktop:max-w-[1280px]',
                 'px-10',
-                'py-4'
+                'py-4',
             )}
         >
             <h1>Register</h1>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.name &&
                                 errors.name.message &&
@@ -47,7 +47,7 @@ const SignUpComponents = (props) => {
                     />
                     {errors && errors.name && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.name.message && 'text-red-500'
                             )}
                         >
@@ -57,7 +57,7 @@ const SignUpComponents = (props) => {
                 </div>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.email &&
                                 errors.email.message &&
@@ -73,7 +73,7 @@ const SignUpComponents = (props) => {
                     />
                     {errors && errors.email && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.email.message && 'text-red-500'
                             )}
                         >
@@ -83,7 +83,7 @@ const SignUpComponents = (props) => {
                 </div>
                 <div>
                     <Label
-                        className={cx(
+                        className={clsx(
                             errors &&
                                 errors.password &&
                                 errors.password.message &&
@@ -94,7 +94,7 @@ const SignUpComponents = (props) => {
                         Password
                     </Label>
                     <div
-                        className={cx(
+                        className={clsx(
                             'flex',
                             'w-full',
                             'items-center',
@@ -102,7 +102,7 @@ const SignUpComponents = (props) => {
                         )}
                     >
                         <Input
-                            className={cx('w-full')}
+                            className={clsx('w-full')}
                             placeholder="Enter your password"
                             type={isPasswordVisible ? 'text' : 'password'}
                             {...register('password')}
@@ -114,15 +114,15 @@ const SignUpComponents = (props) => {
                             }
                         >
                             {isPasswordVisible ? (
-                                <EyeSlashIcon className={cx('w-4', 'h-4')} />
+                                <EyeSlashIcon className={clsx('w-4', 'h-4')} />
                             ) : (
-                                <EyeIcon className={cx('w-4', 'h-4')} />
+                                <EyeIcon className={clsx('w-4', 'h-4')} />
                             )}
                         </Button>
                     </div>
                     {errors && errors.password && (
                         <p
-                            className={cx(
+                            className={clsx(
                                 errors.password.message && 'text-red-500'
                             )}
                         >
@@ -131,7 +131,7 @@ const SignUpComponents = (props) => {
                     )}
                 </div>
                 <Button
-                    className={cx('block', 'grid-cols-1', 'mt-4')}
+                    className={clsx('block', 'grid-cols-1', 'mt-4')}
                     type="submit"
                 >
                     Submit
