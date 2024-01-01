@@ -4,6 +4,10 @@ import PostActivity from '@api/activity/post';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]';
 
+export const config = {
+    runtime: 'nodejs',
+};
+
 const handler = async (req, res) => {
     const session = await getServerSession(req, res, authOptions);
 
