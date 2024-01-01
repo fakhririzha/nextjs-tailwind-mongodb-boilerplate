@@ -9,7 +9,8 @@
           "@config/*": ["src/config/*", "core/config/*"],
           "@models/*": ["src/models/*", "core/models/*"],
           "@api/*": ["src/api/*", "core/api/*"],
-          "@lib/*": ["src/lib/*", "core/lib/*"]
+          "@lib/*": ["src/lib/*", "core/lib/*"],
+          "@shadcn/*": ["core/lib/shadcn/*"]
       }
   }
 }

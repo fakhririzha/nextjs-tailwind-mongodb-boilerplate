@@ -1,49 +1,78 @@
 import Layout from '@layout';
 import Components from '@modules/auth/pages/login/components';
 
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 
-import { useFormik } from 'formik';
-import { object, string } from 'yup';
+import { useRouter } from 'next/router';
 
-const Home = (props) => {
+import { useEffect } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { object, string } from 'zod';
+
+const Login = (props) => {
     const pageConfig = {
         title: 'Log In',
     };
 
-    const formik = useFormik({
-        initialValues: {
+    const router = useRouter();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        defaultValues: {
             email: '',
             password: '',
         },
-        validationSchema: object().shape({
-            email: string()
-                .email('Invalid email address')
-                .required('Email is required'),
-            password: string()
-                .min(8, 'Password must be at least 8 characters')
-                .required('Password is required'),
-        }),
-        onSubmit: async (values, { resetForm }) => {
-            const result = await signIn('credentials', {
-                redirect: false,
-                email: values.email,
-                password: values.password,
-            });
-
-            if (!result.error) {
-                resetForm();
-            } else {
-                console.log(result.error);
-            }
-        },
+        resolver: zodResolver(
+            object({
+                email: string().email({ message: 'Invalid email address' }),
+                password: string().min(1, {
+                    message: 'Password is required',
+                }),
+            }).required()
+        ),
     });
+
+    const submitHandler = async (values) => {
+        const result = await signIn('credentials', {
+            redirect: false,
+            email: values.email,
+            password: values.password,
+        });
+
+        if (!result.error) {
+            reset();
+            router.push('/');
+        } else {
+            console.log(result.error);
+        }
+    };
+
+    useEffect(() => {
+        getSession().then((session) => {
+            if (session) {
+                router.push('/');
+            }
+        });
+    }, [router]);
+
+    const componentProps = {
+        register,
+        handleSubmit,
+        errors,
+        submitHandler,
+    };
 
     return (
         <Layout pageConfig={pageConfig}>
-            <Components formik={formik} {...props} />
+            <Components {...componentProps} {...props} />
         </Layout>
     );
 };
 
-export default Home;
+export default Login;

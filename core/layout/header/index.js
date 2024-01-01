@@ -18,22 +18,23 @@ const Header = () => {
                 )}
             >
                 <ul className={cx('flex', 'flex-row', 'justify-between')}>
+                    <li className={cx('flex', 'flex-row')}>
+                        <Link
+                            href="/"
+                            className={cx(
+                                'px-4',
+                                'py-2',
+                                'text-base',
+                                'text-white',
+                                'hover:cursor-pointer'
+                            )}
+                            prefetch={false}
+                        >
+                            <h1>Webdev IDA - Activity Tracker</h1>
+                        </Link>
+                    </li>
                     {status === 'authenticated' && session ? (
                         <>
-                            <li className={cx('flex', 'flex-row')}>
-                                <Link
-                                    href="/"
-                                    className={cx(
-                                        'px-4',
-                                        'py-2',
-                                        'text-base',
-                                        'text-white',
-                                        'hover:cursor-pointer'
-                                    )}
-                                >
-                                    <h1>Webdev IDA - Activity Tracker</h1>
-                                </Link>
-                            </li>
                             <li className={cx('flex', 'flex-row')}>
                                 <h1
                                     className={cx(
@@ -69,20 +70,6 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            <li className={cx('flex', 'flex-row')}>
-                                <Link
-                                    href="/"
-                                    className={cx(
-                                        'px-4',
-                                        'py-2',
-                                        'text-base',
-                                        'text-white',
-                                        'hover:cursor-pointer'
-                                    )}
-                                >
-                                    <h1>Webdev IDA - Activity Tracker</h1>
-                                </Link>
-                            </li>
                             <li className={cx('flex', 'flex-row')}>
                                 <Link
                                     href="/auth/login"

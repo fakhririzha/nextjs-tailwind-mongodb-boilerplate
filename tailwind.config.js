@@ -1,23 +1,38 @@
 import { BREAKPOINTS } from './core/config/vars';
 
-const { nextui } = require('@nextui-org/theme');
 const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: ['class'],
     content: [
+        './pages/**/*.{js,jsx}',
         './core/**/*.{js,ts,jsx,tsx,mdx}',
-        './node_modules/@nextui-org/theme/dist/components/(autocomplete|button|input).js',
+        './src/**/*.{js,jsx}',
     ],
+    prefix: '',
     theme: {
-        extend: {
-            backgroundImage: {
-                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        container: {
+            center: true,
+            padding: '2rem',
+            screens: {
+                '2xl': '1400px',
             },
-            fontFamily: {
-                sans: ['var(--font-inter)'],
+        },
+        extend: {
+            keyframes: {
+                'accordion-down': {
+                    from: { height: '0' },
+                    to: { height: 'var(--radix-accordion-content-height)' },
+                },
+                'accordion-up': {
+                    from: { height: 'var(--radix-accordion-content-height)' },
+                    to: { height: '0' },
+                },
+            },
+            animation: {
+                'accordion-down': 'accordion-down 0.2s ease-out',
+                'accordion-up': 'accordion-up 0.2s ease-out',
             },
         },
         screens: {
@@ -26,9 +41,8 @@ module.exports = {
             desktop: `${BREAKPOINTS.desktop}px`,
         },
     },
-    darkMode: 'class',
     plugins: [
-        nextui(),
+        require('tailwindcss-animate'),
         require('@tailwindcss/forms')({
             strategy: 'class',
         }),

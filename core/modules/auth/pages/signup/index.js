@@ -7,8 +7,9 @@ import { useRouter } from 'next/router';
 
 import { signIn } from 'next-auth/react';
 
-import { useFormik } from 'formik';
-import { object, string } from 'yup';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { object, string } from 'zod';
 
 const Home = (props) => {
     const pageConfig = {
@@ -17,47 +18,64 @@ const Home = (props) => {
 
     const router = useRouter();
 
-    const formik = useFormik({
-        initialValues: {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        defaultValues: {
             name: '',
             email: '',
             password: '',
         },
-        validationSchema: object().shape({
-            name: string().required('Name is required'),
-            email: string()
-                .email('Invalid email address')
-                .required('Email is required'),
-            password: string()
-                .min(8, 'Password must be at least 8 characters')
-                .required('Password is required'),
-        }),
-        onSubmit: async (values, { resetForm }) => {
-            try {
-                await handleRegister(values, resetForm);
-
-                const result = await signIn('credentials', {
-                    redirect: false,
-                    email: values.email,
-                    password: values.password,
-                });
-
-                if (!result.error) {
-                    resetForm();
-                    console.log('registered and logged in', result);
-                    router.replace('/');
-                } else {
-                    console.log(result.error);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        },
+        resolver: zodResolver(
+            object({
+                name: string().min(1, { message: 'Name is required' }),
+                email: string().email({ message: 'Invalid email address' }),
+                password: string({ message: 'Password is required' })
+                    .min(8, {
+                        message: 'Password must be at least 8 characters',
+                    })
+                    .max(16, {
+                        message: 'Password must be at most 16 characters',
+                    }),
+            })
+        ),
     });
+
+    const submitHandler = async (values) => {
+        try {
+            await handleRegister(values);
+
+            const result = await signIn('credentials', {
+                redirect: false,
+                email: values.email,
+                password: values.password,
+            });
+
+            if (!result.error) {
+                reset();
+                console.log('registered and logged in', result);
+                router.replace('/');
+            } else {
+                console.log(result.error);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const componentProps = {
+        register,
+        handleSubmit,
+        errors,
+        submitHandler,
+    };
 
     return (
         <Layout pageConfig={pageConfig}>
-            <Components formik={formik} {...props} />
+            <Components {...componentProps} {...props} />
         </Layout>
     );
 };

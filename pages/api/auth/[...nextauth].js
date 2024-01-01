@@ -6,7 +6,7 @@ import MongoDBConnection from '@lib/db';
 
 import User from '@models/user';
 
-export default NextAuth({
+export const authOptions = {
     session: {
         strategy: 'jwt',
         maxAge: 60 * 60,
@@ -40,4 +40,6 @@ export default NextAuth({
             },
         }),
     ],
-});
+};
+
+export default NextAuth(authOptions);

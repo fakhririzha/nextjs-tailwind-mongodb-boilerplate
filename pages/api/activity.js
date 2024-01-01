@@ -1,7 +1,17 @@
 import GetActivity from '@api/activity/get';
 import PostActivity from '@api/activity/post';
 
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]';
+
 const handler = async (req, res) => {
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session) {
+        res.status(401).json({ message: 'You must be logged in.' });
+        return;
+    }
+
     if (req.method === 'GET') {
         await GetActivity(req, res);
     } else if (req.method === 'POST') {

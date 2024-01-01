@@ -1,15 +1,16 @@
 import { useState } from 'react';
 
-import cx from 'classnames';
-
-import { Button } from '@nextui-org/button';
-import { Input } from '@nextui-org/input';
+import { Button } from '@shadcn/components/ui/button';
+import { Input } from '@shadcn/components/ui/input';
+import { Label } from '@shadcn/components/ui/label';
 
 import EyeIcon from '@heroicons/react/24/solid/EyeIcon';
 import EyeSlashIcon from '@heroicons/react/24/solid/EyeSlashIcon';
 
-const SignUpComponents = (props) => {
-    const { formik } = props;
+import cx from 'classnames';
+
+const LoginComponents = (props) => {
+    const { register, handleSubmit, errors, submitHandler } = props;
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -26,57 +27,85 @@ const SignUpComponents = (props) => {
                 'py-4'
             )}
         >
-            <form
-                onSubmit={formik.handleSubmit}
-                className={cx('flex', 'flex-col', 'flex-nowrap', 'gap-4')}
-            >
-                <Input
-                    className={cx('flex', 'basis-1/2')}
-                    onChange={formik.handleChange}
-                    type="email"
-                    name="email"
-                    label="Email"
-                    value={formik.values.email}
-                    isRequired
-                />
-                <Input
-                    className={cx('basis-full')}
-                    onChange={formik.handleChange}
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    name="password"
-                    label="Password"
-                    value={formik.values.password}
-                    isRequired
-                    endContent={
-                        <button
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit(submitHandler)}>
+                <div>
+                    <Label
+                        className={cx(
+                            errors &&
+                                errors.email &&
+                                errors.email.message &&
+                                'text-red-500'
+                        )}
+                        htmlFor="email"
+                    >
+                        Email
+                    </Label>
+                    <Input
+                        placeholder="Enter your email"
+                        {...register('email')}
+                    />
+                    {errors && errors.email && (
+                        <p
+                            className={cx(
+                                errors.email.message && 'text-red-500'
+                            )}
+                        >
+                            {errors.email.message}
+                        </p>
+                    )}
+                </div>
+                <div>
+                    <Label
+                        className={cx(
+                            errors &&
+                                errors.password &&
+                                errors.password.message &&
+                                'text-red-500'
+                        )}
+                        htmlFor="password"
+                    >
+                        Password
+                    </Label>
+                    <div
+                        className={cx(
+                            'flex',
+                            'w-full',
+                            'items-center',
+                            'gap-x-4'
+                        )}
+                    >
+                        <Input
+                            className={cx('w-full')}
+                            placeholder="Enter your password"
+                            type={isPasswordVisible ? 'text' : 'password'}
+                            {...register('password')}
+                        />
+                        <Button
                             type="button"
-                            onClick={togglePasswordVisibility}
+                            onClick={() =>
+                                togglePasswordVisibility(!isPasswordVisible)
+                            }
                         >
                             {isPasswordVisible ? (
-                                <EyeSlashIcon
-                                    className={cx(
-                                        'w-6',
-                                        'h-6',
-                                        'pointer-events-none',
-                                        'text-gray-500'
-                                    )}
-                                />
+                                <EyeSlashIcon className={cx('w-4', 'h-4')} />
                             ) : (
-                                <EyeIcon
-                                    className={cx(
-                                        'w-6',
-                                        'h-6',
-                                        'pointer-events-none',
-                                        'text-gray-500'
-                                    )}
-                                />
+                                <EyeIcon className={cx('w-4', 'h-4')} />
                             )}
-                        </button>
-                    }
-                />
+                        </Button>
+                    </div>
+                    {errors && errors.password && (
+                        <p
+                            className={cx(
+                                errors.password.message && 'text-red-500'
+                            )}
+                        >
+                            {errors.password.message}
+                        </p>
+                    )}
+                </div>
                 <Button
-                    className={cx('block', 'grid-cols-1')}
-                    color="primary"
+                    className={cx('block', 'grid-cols-1', 'mt-4')}
                     type="submit"
                 >
                     Submit
@@ -86,4 +115,4 @@ const SignUpComponents = (props) => {
     );
 };
 
-export default SignUpComponents;
+export default LoginComponents;

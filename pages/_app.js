@@ -1,41 +1,86 @@
+import Layout from '@layout';
+
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ['latin'] });
 
 import cx from 'classnames';
 
-import { NextUIProvider } from '@nextui-org/system';
-
 import '@styles/globals.css';
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider, useSession } from 'next-auth/react';
+
+const AuthWrapper = ({ children }) => {
+    const pageConfig = {
+        title: 'Loading...',
+    };
+
+    const router = useRouter();
+
+    const { status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push('/auth/login');
+        },
+    });
+
+    if (status === 'loading') {
+        return (
+            <Layout pageConfig={pageConfig}>
+                <div>Loading...</div>
+            </Layout>
+        );
+    }
+
+    return children;
+};
 
 const App = (props) => {
     const {
         Component,
         pageProps: { session, ...pageProps },
     } = props;
-    const router = useRouter();
 
     return (
         <SessionProvider session={session} refetchInterval={5 * 60}>
-            <NextUIProvider navigate={router.push}>
-                <Component
-                    {...pageProps}
-                    className={cx(
-                        inter.className,
-                        'light',
-                        'text-foreground',
-                        'bg-background'
-                    )}
-                />
-                <style jsx global>
-                    {`
-                        html {
-                            font-family: ${inter.style.fontFamily};
-                        }
-                    `}
-                </style>
-            </NextUIProvider>
+            {Component.auth ? (
+                <AuthWrapper>
+                    <Component
+                        {...pageProps}
+                        className={cx(
+                            inter.className,
+                            'light',
+                            'text-foreground',
+                            'bg-background'
+                        )}
+                    />
+                    <style jsx global>
+                        {`
+                            html {
+                                font-family: ${inter.style.fontFamily};
+                            }
+                        `}
+                    </style>
+                </AuthWrapper>
+            ) : (
+                <>
+                    <Component
+                        {...pageProps}
+                        className={cx(
+                            inter.className,
+                            'light',
+                            'text-foreground',
+                            'bg-background'
+                        )}
+                    />
+                    <style jsx global>
+                        {`
+                            html {
+                                font-family: ${inter.style.fontFamily};
+                            }
+                        `}
+                    </style>
+                </>
+            )}
         </SessionProvider>
     );
 };

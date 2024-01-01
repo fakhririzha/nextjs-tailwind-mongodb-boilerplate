@@ -3,66 +3,54 @@ import Components from '@modules/home/pages/components';
 
 import { handleCreateActivity } from '@modules/home/services';
 
-import { getSession } from 'next-auth/react';
-
-import { useRouter } from 'next/router';
-
-import { useEffect, useState } from 'react';
-
-import { useFormik } from 'formik';
-import { object, string } from 'yup';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { object, string } from 'zod';
 
 const Home = (props) => {
     const pageConfig = {
         title: 'Dashboard',
     };
 
-    const router = useRouter();
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    const formik = useFormik({
-        initialValues: {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        defaultValues: {
             name: '',
             location: '',
         },
-        validationSchema: object().shape({
-            name: string().required('Name is required'),
-            location: string().required('Location is required'),
-        }),
-        onSubmit: async (values, { resetForm }) => {
-            try {
-                await handleCreateActivity(values);
-                console.log('Berhasil membuat aktivitas baru!');
-                resetForm();
-            } catch (error) {
-                console.log(error);
-                console.log('Gagal membuat aktivitas baru');
-            }
-        },
+        resolver: zodResolver(
+            object({
+                name: string().min(1, { message: 'Name is required' }),
+                location: string().min(1, { message: 'Location is required' }),
+            })
+        ),
     });
 
-    useEffect(() => {
-        getSession().then((session) => {
-            if (!session) {
-                router.push('/auth/login');
-            } else {
-                setIsLoading(false);
-            }
-        });
-    }, [router]);
+    const submitHandler = async (values) => {
+        try {
+            await handleCreateActivity(values);
+            console.log('Berhasil membuat aktivitas baru!');
+            reset();
+        } catch (error) {
+            console.log(error);
+            console.log('Gagal membuat aktivitas baru');
+        }
+    };
 
-    if (isLoading) {
-        return (
-            <Layout pageConfig={pageConfig}>
-                <h1>Loading...</h1>
-            </Layout>
-        );
-    }
+    const componentProps = {
+        register,
+        handleSubmit,
+        errors,
+        submitHandler,
+    };
 
     return (
         <Layout pageConfig={pageConfig}>
-            <Components formik={formik} {...props} />
+            <Components {...componentProps} {...props} />
         </Layout>
     );
 };
