@@ -1,8 +1,8 @@
 import { clsx } from 'clsx/lite';
 
 import { Button } from '@shadcn/components/ui/button';
-import { Input } from '@shadcn/components/ui/input';
-import { Label } from '@shadcn/components/ui/label';
+
+import InputComponents from '@lib/components/input';
 
 const HomeComponents = (props) => {
     const { register, handleSubmit, errors, submitHandler } = props;
@@ -20,56 +20,34 @@ const HomeComponents = (props) => {
             <h1>Form Activity Tracker</h1>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
-                    <Label
-                        className={clsx(
-                            errors &&
-                                errors.name &&
-                                errors.name.message &&
-                                'text-red-500'
-                        )}
-                        htmlFor="name"
-                    >
-                        Name
-                    </Label>
-                    <Input
-                        placeholder="Enter your activity name"
-                        {...register('name')}
+                    <InputComponents
+                        formHandler={{
+                            ...register('name', { required: true }),
+                        }}
+                        className={clsx('rounded-lg')}
+                        type="text"
+                        label="Name"
+                        error={errors.name}
+                        errorMessage={errors.name && errors.name.message}
+                        useLabel
+                        ref={null}
                     />
-                    {errors && errors.name && (
-                        <p
-                            className={clsx(
-                                errors.name.message && 'text-red-500'
-                            )}
-                        >
-                            {errors.name.message}
-                        </p>
-                    )}
                 </div>
                 <div>
-                    <Label
-                        className={clsx(
-                            errors &&
-                                errors.location &&
-                                errors.location.message &&
-                                'text-red-500'
-                        )}
-                        htmlFor="location"
-                    >
-                        Location
-                    </Label>
-                    <Input
-                        placeholder="Enter your activity location"
-                        {...register('location')}
+                    <InputComponents
+                        formHandler={{
+                            ...register('location', { required: true }),
+                        }}
+                        className={clsx('rounded-lg')}
+                        type="text"
+                        label="Location"
+                        error={errors.location}
+                        errorMessage={
+                            errors.location && errors.location.message
+                        }
+                        useLabel
+                        ref={null}
                     />
-                    {errors && errors.location && (
-                        <p
-                            className={clsx(
-                                errors.location.message && 'text-red-500'
-                            )}
-                        >
-                            {errors.location.message}
-                        </p>
-                    )}
                 </div>
                 <Button
                     className={clsx('block', 'grid-cols-1', 'mt-4')}

@@ -40,6 +40,9 @@ module.exports = {
             tablet: `${BREAKPOINTS.tablet}px`,
             desktop: `${BREAKPOINTS.desktop}px`,
         },
+        borderWidth: {
+            1: '1px',
+        },
     },
     plugins: [
         require('tailwindcss-animate'),

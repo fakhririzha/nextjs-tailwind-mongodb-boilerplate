@@ -23,6 +23,7 @@ const Home = (props) => {
         handleSubmit,
         formState: { errors },
         reset,
+        watch,
     } = useForm({
         defaultValues: {
             name: '',
@@ -65,6 +66,8 @@ const Home = (props) => {
             console.log(err);
         }
     };
+
+    console.log(watch('name'));
 
     const componentProps = {
         register,
