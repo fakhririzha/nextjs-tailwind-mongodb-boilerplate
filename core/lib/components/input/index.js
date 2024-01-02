@@ -18,6 +18,8 @@ const InputComponent = (props) => {
         type,
     } = props;
 
+    console.log('error', error);
+
     return (
         <div
             className={clsx(
@@ -80,7 +82,7 @@ InputComponent.propTypes = {
     label: PropTypes.string,
     startIcon: PropTypes.element,
     endIcon: PropTypes.element,
-    error: PropTypes.bool,
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     errorMessage: PropTypes.string,
     type: PropTypes.oneOf(['text', 'password', 'email', 'number']),
 };

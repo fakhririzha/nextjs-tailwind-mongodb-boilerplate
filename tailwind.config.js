@@ -53,15 +53,36 @@ module.exports = {
             strategy: 'class',
         }),
         plugin(({ addUtilities }) => {
-            addUtilities({
-                '.scrollbar-none': {
-                    '-ms-overflow-style': 'none',
-                    'scrollbar-width': 'none',
+            addUtilities(
+                {
+                    '.scrollbar-hide': {
+                        /* IE and Edge */
+                        '-ms-overflow-style': 'none',
+
+                        /* Firefox */
+                        'scrollbar-width': 'none',
+
+                        /* Safari and Chrome */
+                        '&::-webkit-scrollbar': {
+                            display: 'none',
+                        },
+                    },
+
+                    '.scrollbar-default': {
+                        /* IE and Edge */
+                        '-ms-overflow-style': 'auto',
+
+                        /* Firefox */
+                        'scrollbar-width': 'auto',
+
+                        /* Safari and Chrome */
+                        '&::-webkit-scrollbar': {
+                            display: 'block',
+                        },
+                    },
                 },
-                '.scrollbar-none::-webkit-scrollbar': {
-                    display: 'none',
-                },
-            });
+                ['responsive']
+            );
         }),
     ],
 };
