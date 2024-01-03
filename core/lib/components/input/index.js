@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { Input } from '@shadcn/components/ui/input';
+import { Input as ShadcnInput } from '@shadcn/components/ui/input';
 import { Label } from '@shadcn/components/ui/label';
 
 import { clsx } from 'clsx/lite';
 
-const InputComponent = (props) => {
+const Input = (props) => {
     const {
         formHandler,
         className,
@@ -16,9 +16,8 @@ const InputComponent = (props) => {
         error,
         errorMessage,
         type,
+        placeholder,
     } = props;
-
-    console.log('error', error);
 
     return (
         <div
@@ -51,9 +50,10 @@ const InputComponent = (props) => {
                 {startIcon && (
                     <div className="start-icon-container">{startIcon}</div>
                 )}
-                <Input
+                <ShadcnInput
                     {...formHandler}
                     type={type}
+                    placeholder={placeholder}
                     className={clsx(
                         'pl-4',
                         'rounded-l-lg',
@@ -74,7 +74,7 @@ const InputComponent = (props) => {
     );
 };
 
-InputComponent.propTypes = {
+Input.propTypes = {
     type: PropTypes.oneOf(['text', 'password', 'email', 'number']),
     placeholder: PropTypes.string,
     className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
@@ -87,7 +87,7 @@ InputComponent.propTypes = {
     type: PropTypes.oneOf(['text', 'password', 'email', 'number']),
 };
 
-InputComponent.defaultProps = {
+Input.defaultProps = {
     type: 'text',
     placeholder: '',
     className: '',
@@ -100,4 +100,4 @@ InputComponent.defaultProps = {
     type: 'text',
 };
 
-export default InputComponent;
+export default Input;

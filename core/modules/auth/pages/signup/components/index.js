@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
 import { Button } from '@shadcn/components/ui/button';
-import { Input } from '@shadcn/components/ui/input';
-import { Label } from '@shadcn/components/ui/label';
 
-import InputComponents from '@lib/components/input';
+import Input from '@lib/components/input';
 
 import EyeIcon from '@heroicons/react/24/solid/EyeIcon';
 import EyeSlashIcon from '@heroicons/react/24/solid/EyeSlashIcon';
@@ -32,7 +30,7 @@ const SignUpComponents = (props) => {
             <h1>Register</h1>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{
                             ...register('name', { required: true }),
                         }}
@@ -46,7 +44,7 @@ const SignUpComponents = (props) => {
                     />
                 </div>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{
                             ...register('email', { required: true }),
                         }}
@@ -60,7 +58,7 @@ const SignUpComponents = (props) => {
                     />
                 </div>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{
                             ...register('password', { required: true }),
                         }}

@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { object, string } from 'zod';
 
-const Home = (props) => {
+const Signup = (props) => {
     const pageConfig = {
         title: 'Sign Up',
     };
@@ -80,4 +80,4 @@ const Home = (props) => {
     );
 };
 
-export default Home;
+export default Signup;

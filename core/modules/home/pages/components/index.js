@@ -2,7 +2,7 @@ import { clsx } from 'clsx/lite';
 
 import { Button } from '@shadcn/components/ui/button';
 
-import InputComponents from '@lib/components/input';
+import Input from '@lib/components/input';
 
 const HomeComponents = (props) => {
     const { register, handleSubmit, errors, submitHandler } = props;
@@ -20,7 +20,7 @@ const HomeComponents = (props) => {
             <h1>Form Activity Tracker</h1>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{
                             ...register('name', { required: true }),
                         }}
@@ -34,7 +34,7 @@ const HomeComponents = (props) => {
                     />
                 </div>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{
                             ...register('location', { required: true }),
                         }}

@@ -7,7 +7,7 @@ import EyeSlashIcon from '@heroicons/react/24/solid/EyeSlashIcon';
 
 import { clsx } from 'clsx/lite';
 
-import InputComponents from '@lib/components/input';
+import Input from '@lib/components/input';
 
 const LoginComponents = (props) => {
     const { register, handleSubmit, errors, submitHandler } = props;
@@ -30,7 +30,7 @@ const LoginComponents = (props) => {
             <h1>Login</h1>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{ ...register('email') }}
                         className={clsx('rounded-lg')}
                         type="text"
@@ -42,7 +42,7 @@ const LoginComponents = (props) => {
                     />
                 </div>
                 <div>
-                    <InputComponents
+                    <Input
                         formHandler={{ ...register('password') }}
                         type={isPasswordVisible ? 'text' : 'password'}
                         label="Password"

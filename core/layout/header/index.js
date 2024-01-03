@@ -30,7 +30,7 @@ const Header = () => {
                             )}
                             prefetch={false}
                         >
-                            <h1>Webdev IDA - Activity Tracker</h1>
+                            <h1>Personal Project</h1>
                         </Link>
                     </li>
                     {status === 'authenticated' && session ? (
