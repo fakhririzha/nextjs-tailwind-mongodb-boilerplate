@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 
-import MagnifyingGlassIcon from '@heroicons/react/20/solid/MagnifyingGlassIcon';
+import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
+import XMarkIcon from '@heroicons/react/24/solid/XMarkIcon';
 
 import Input from '@lib/components/input';
 import Popover from '@lib/components/popover';
@@ -9,15 +10,8 @@ import Popover from '@lib/components/popover';
 import { clsx } from 'clsx/lite';
 
 const Combobox = (props) => {
-    const {
-        useLabel,
-        label,
-        useKeyboardAction,
-        useClearButton,
-        comboboxOptions,
-        comboboxData,
-        ...other
-    } = props;
+    const { useLabel, label, useKeyboardAction, useClearButton, comboboxData } =
+        props;
 
     const [inputValue, setInputValue] = useState('');
     const [isOpen, onOpenChange] = useState(false);
@@ -144,7 +138,7 @@ const Combobox = (props) => {
                     'min-w-[320px]'
                 )}
                 placement="bottom"
-                placementClassName={clsx('top-2', '!relative')}
+                placementClassName={clsx('!top-2', 'relative')}
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
@@ -155,9 +149,18 @@ const Combobox = (props) => {
                             setInputValue(e.target.value);
                         },
                         onFocus: () => onOpenChange(true),
+                        onKeyDown: (e) => {
+                            if (useKeyboardAction) {
+                                if (e.key === 'Escape') {
+                                    onOpenChange(false);
+                                    setInputValue('');
+                                }
+                            }
+                        },
                         value: inputValue,
                     }}
                     type="text"
+                    useLabel={useLabel}
                     label={label}
                     placeholder="Enter a keyword"
                     endIcon={
@@ -171,21 +174,55 @@ const Combobox = (props) => {
                                 'h-10'
                             )}
                         >
-                            <MagnifyingGlassIcon
-                                className={clsx('w-5', 'h-5', 'text-slate-400')}
-                            />
+                            {useClearButton && inputValue !== '' ? (
+                                <XMarkIcon
+                                    onClick={() => {
+                                        setInputValue('');
+                                        onOpenChange(false);
+                                    }}
+                                    className={clsx(
+                                        'w-6',
+                                        'h-6',
+                                        'text-slate-400'
+                                    )}
+                                />
+                            ) : (
+                                <MagnifyingGlassIcon
+                                    className={clsx(
+                                        'w-6',
+                                        'h-6',
+                                        'text-slate-400'
+                                    )}
+                                />
+                            )}
                         </div>
                     }
                     ref={null}
-                    useLabel={useLabel}
                 />
             </Popover>
         </div>
     );
 };
 
-Combobox.propTypes = {};
+Combobox.propTypes = {
+    useLabel: PropTypes.bool,
+    label: PropTypes.string,
+    useKeyboardAction: PropTypes.bool,
+    useClearButton: PropTypes.bool,
+    comboboxData: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            value: PropTypes.string,
+            onClick: PropTypes.func,
+        })
+    ).isRequired,
+};
 
-Combobox.defaultProps = {};
+Combobox.defaultProps = {
+    useLabel: false,
+    label: '',
+    useKeyboardAction: false,
+    useClearButton: false,
+};
 
 export default Combobox;

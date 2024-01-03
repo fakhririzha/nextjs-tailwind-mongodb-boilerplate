@@ -4,9 +4,7 @@ import Combobox from '@lib/components/combobox';
 import Popover from '@lib/components/popover';
 import Tooltip from '@lib/components/tooltip';
 
-const PlaygroundComponents = (props) => {
-    const {} = props;
-
+const PlaygroundComponents = () => {
     const comboboxData = [
         {
             label: 'Option 1',
@@ -52,7 +50,11 @@ const PlaygroundComponents = (props) => {
                 This is a tooltip
             </Tooltip>
             <div className={clsx('pt-8')} />
-            <Combobox comboboxData={comboboxData} />
+            <Combobox
+                comboboxData={comboboxData}
+                useKeyboardAction
+                useClearButton
+            />
         </div>
     );
 };
