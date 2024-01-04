@@ -19,9 +19,6 @@ const getActivity = async (parent, args, context) => {
             );
         }
 
-        // console.log('authorization', authorization);
-        // console.log('cookie', cookie);
-
         const token = await decode({
             token: authorization.split('Bearer ')[1],
             secret: process.env.NEXTAUTH_SECRET,
