@@ -13,7 +13,6 @@ const createApolloServer = () => {
 
     return new ApolloServer({
         schema: combinedSchema,
-        introspection: process.env.NODE_ENV !== 'production',
     });
 };
 
