@@ -4,6 +4,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { stitchSchemas } from '@graphql-tools/stitch';
 
 import serverSchema from '@lib/graphql/serverSchema';
+import allowCors from '@lib/graphql/utils/allowCors';
 
 const createApolloServer = () => {
     const combinedSchema = stitchSchemas({
@@ -12,6 +13,7 @@ const createApolloServer = () => {
 
     return new ApolloServer({
         schema: combinedSchema,
+        introspection: process.env.NODE_ENV !== 'production',
     });
 };
 
@@ -25,4 +27,4 @@ const graphQLServer = async (req, res) => {
     return handler(req, res);
 };
 
-export default graphQLServer;
+export default allowCors(graphQLServer);

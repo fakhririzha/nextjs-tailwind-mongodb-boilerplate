@@ -2,7 +2,7 @@ const allowCors = (fn) => async (req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     res.setHeader(
-        'origin',
+        'Origin',
         'https://nextjs-tailwind-mongodb-boilerplate.vercel.app'
     );
 
@@ -15,7 +15,7 @@ const allowCors = (fn) => async (req, res) => {
 
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Reqiested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
     );
 
     if (req.method === 'OPTIONS') {
