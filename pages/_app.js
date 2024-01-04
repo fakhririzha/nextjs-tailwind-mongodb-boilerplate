@@ -1,5 +1,7 @@
 import Layout from '@layout';
 
+import { Analytics } from '@vercel/analytics/react';
+
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ['latin'] });
@@ -53,6 +55,7 @@ const App = (props) => {
                             'bg-background'
                         )}
                     />
+                    <Analytics />
                     <style jsx global>
                         {`
                             html {
@@ -72,6 +75,7 @@ const App = (props) => {
                             'bg-background'
                         )}
                     />
+                    <Analytics />
                     <style jsx global>
                         {`
                             html {
