@@ -1,6 +1,5 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 import { stitchSchemas } from '@graphql-tools/stitch';
 
@@ -13,7 +12,6 @@ const createApolloServer = () => {
 
     return new ApolloServer({
         schema: combinedSchema,
-        plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     });
 };
 
