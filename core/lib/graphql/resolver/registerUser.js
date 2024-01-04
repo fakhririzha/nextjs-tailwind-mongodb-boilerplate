@@ -7,7 +7,7 @@ const registerUser = async (
 ) => {
     try {
         const res = await fetch(
-            `${
+            `https://${
                 process.env.VERCEL_URL ||
                 process.env.PUBLIC_URL ||
                 process.env.NEXT_PUBLIC_URL
