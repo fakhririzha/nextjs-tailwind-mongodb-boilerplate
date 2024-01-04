@@ -7,11 +7,9 @@ const registerUser = async (
 ) => {
     try {
         const res = await fetch(
-            `https://${
-                process.env.VERCEL_URL ||
-                process.env.PUBLIC_URL ||
-                process.env.NEXT_PUBLIC_URL
-            }/api/auth/signup`,
+            process.env.VERCEL_URL
+                ? `https://${process.env.VERCEL_URL}/api/auth/signup`
+                : 'http://localhost:3000/api/auth/signup',
             {
                 method: 'POST',
                 headers: {
