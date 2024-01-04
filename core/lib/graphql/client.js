@@ -10,7 +10,9 @@ import { setContext } from '@apollo/client/link/context';
 import { useMemo } from 'react';
 
 const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL,
+    uri: process.env.VERCEL_URL
+        ? `${process.env.VERCEL_URL}/api/graphql`
+        : process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL,
 });
 
 const ApolloProviderWrapper = ({ children }) => {
