@@ -4,11 +4,9 @@ import Activity from '@models/activity';
 const GetActivity = async (req, res) => {
     try {
         await MongoDBConnection();
-        const activities = await Activity.find();
+        const activity = await Activity.find();
 
-        res.setHeader('Cache-Control', 'public, s-maxage=1');
-
-        return res.status(200).send(activities);
+        return res.status(200).send(activity);
     } catch (error) {
         return res.status(500).send(error);
     }

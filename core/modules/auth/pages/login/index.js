@@ -31,7 +31,6 @@ const Login = (props) => {
         },
         resolver: zodResolver(
             object({
-                nama: string().min(1, { message: 'Nama is required' }),
                 email: string().email({ message: 'Invalid email address' }),
                 password: string().min(1, {
                     message: 'Password is required',

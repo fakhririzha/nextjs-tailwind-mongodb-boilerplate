@@ -6,13 +6,20 @@ const registerUser = async (
     context
 ) => {
     try {
-        const res = await fetch('http://localhost:3000/api/auth/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password }),
-        });
+        const res = await fetch(
+            `${
+                process.env.VERCEL_URL ||
+                process.env.PUBLIC_URL ||
+                process.env.NEXT_PUBLIC_URL
+            }/api/auth/signup`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password }),
+            }
+        );
 
         const resJson = await res.json();
 

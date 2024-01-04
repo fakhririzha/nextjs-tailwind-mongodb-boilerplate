@@ -1,13 +1,13 @@
 import Layout from '@layout';
 import Components from '@modules/activity/pages/components';
 
-import { handleGetActivity } from '@modules/activity/services';
-
 import { getSession } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
 
-import { useEffect, useState } from 'react';
+import { gqlGetActivity } from '@modules/activity/services/graphql';
+
+import { useEffect } from 'react';
 
 const Home = (props) => {
     const pageConfig = {
@@ -16,22 +16,19 @@ const Home = (props) => {
 
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [activityData, setActivityData] = useState([]);
+    const [actGetActivity, { data, loading, error }] = gqlGetActivity();
 
     useEffect(() => {
         getSession().then(async (session) => {
             if (!session) {
                 router.push('/auth/login');
             } else {
-                setIsLoading(false);
-                const dataActivity = await handleGetActivity();
-                setActivityData(dataActivity);
+                await actGetActivity();
             }
         });
-    }, [router]);
+    }, [actGetActivity, router]);
 
-    if (isLoading) {
+    if (loading) {
         return (
             <Layout pageConfig={pageConfig}>
                 <h1>Loading...</h1>
@@ -39,9 +36,13 @@ const Home = (props) => {
         );
     }
 
+    if (error) {
+        router.push('/auth/login');
+    }
+
     return (
         <Layout pageConfig={pageConfig}>
-            <Components activityData={activityData} {...props} />
+            <Components activityData={data && data.getActivity} {...props} />
         </Layout>
     );
 };

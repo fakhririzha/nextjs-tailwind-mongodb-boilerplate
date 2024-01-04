@@ -1,7 +1,7 @@
 import Layout from '@layout';
 import Components from '@modules/auth/pages/signup/components';
 
-import { handleRegister } from '@modules/auth/services';
+// import { handleRegister } from '@modules/auth/services';
 
 import { useRouter } from 'next/router';
 
@@ -11,12 +11,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { object, string } from 'zod';
 
+import { gqlRegisterUser } from '@modules/auth/services/graphql';
+
 const Signup = (props) => {
     const pageConfig = {
         title: 'Sign Up',
     };
 
     const router = useRouter();
+
+    const [registerUser] = gqlRegisterUser();
 
     const {
         register,
@@ -46,7 +50,13 @@ const Signup = (props) => {
 
     const submitHandler = async (values) => {
         try {
-            await handleRegister(values);
+            const gqlRegisterUser = await registerUser({
+                variables: {
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                },
+            });
 
             const result = await signIn('credentials', {
                 redirect: false,
@@ -56,7 +66,6 @@ const Signup = (props) => {
 
             if (!result.error) {
                 reset();
-                console.log('registered and logged in', result);
                 router.replace('/');
             } else {
                 console.log(result.error);
