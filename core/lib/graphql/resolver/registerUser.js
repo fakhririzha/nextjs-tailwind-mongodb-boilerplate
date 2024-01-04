@@ -1,0 +1,33 @@
+import fetch from 'isomorphic-unfetch';
+
+const registerUser = async (
+    parent,
+    { input: { name, email, password } },
+    context
+) => {
+    const res = await fetch('http://localhost:3000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+    });
+
+    const resJson = await res.json();
+
+    console.log('resJson', resJson);
+
+    if (resJson._id) {
+        return {
+            _id: resJson._id,
+            name: resJson.name,
+            email: resJson.email,
+            password: resJson.password,
+            createdAt: resJson.createdAt,
+            updatedAt: resJson.updatedAt,
+        };
+    }
+    return res;
+};
+
+export default registerUser;
