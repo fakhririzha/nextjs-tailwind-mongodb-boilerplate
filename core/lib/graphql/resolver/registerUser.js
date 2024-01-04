@@ -5,19 +5,17 @@ const registerUser = async (
     { input: { name, email, password } },
     context
 ) => {
-    const res = await fetch('http://localhost:3000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
-    });
+    try {
+        const res = await fetch('http://localhost:3000/api/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password }),
+        });
 
-    const resJson = await res.json();
+        const resJson = await res.json();
 
-    console.log('resJson', resJson);
-
-    if (resJson._id) {
         return {
             _id: resJson._id,
             name: resJson.name,
@@ -26,8 +24,10 @@ const registerUser = async (
             createdAt: resJson.createdAt,
             updatedAt: resJson.updatedAt,
         };
+    } catch (error) {
+        return error;
     }
-    return res;
+    
 };
 
 export default registerUser;
