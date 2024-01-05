@@ -38,8 +38,8 @@ const getActivity = async (parent, args, context) => {
         }
 
         const res = await fetch(
-            process.env.VERCEL_URL
-                ? `https://${process.env.VERCEL_URL}/api/activity`
+            process.env.NEXT_PUBLIC_URL
+                ? `${process.env.NEXT_PUBLIC_URL}/api/activity`
                 : 'http://localhost:3000/api/activity',
             {
                 method: 'GET',
