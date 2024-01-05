@@ -53,6 +53,8 @@ const getActivity = async (parent, args, context) => {
 
         const resJson = await res.json();
 
+        console.log('resJson', resJson);
+
         return resJson;
     } catch (error) {
         return error;
